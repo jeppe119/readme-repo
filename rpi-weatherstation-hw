@@ -1,0 +1,34 @@
+# Raspberry Pi Weather Station - Hardware Checklist
+
+## Core Components
+- [ ] **Raspberry Pi 4** (2GB+ RAM, with cooling fan/heatsink)  
+- [ ] **Power Supply** (Official Pi 4 USB-C, 5V/3A)  
+- [ ] **MicroSD Card** (32GB+, Class 10 for OS and data)  
+
+## Sensors
+- [ ] **Temperature & Humidity Sensor**  
+  - **BME280** (recommended, I2C/SPI) *or* **DHT22** (cheaper, less accurate)  
+- [ ] **Anemometer (Wind Speed Sensor)**  
+  - Pulse-output (e.g., Davis 6410) *or* Ultrasonic (no moving parts)  
+- [ ] **Wind Vane (Direction, Optional)**  
+  - Potentiometer-based (analog, requires ADC)  
+
+## Camera Setup
+- [ ] **Two Cameras**  
+  - Raspberry Pi Camera Module V2/V3 (official) *or* USB webcams  
+- [ ] **Camera Cables/Adapters** (if needed)  
+
+## Additional Electronics
+- [ ] **MCP3008 ADC Chip** (for analog wind vane)  
+- [ ] **Breadboard & Jumper Wires**  
+- [ ] **Weatherproof Enclosure** (outdoor protection)  
+
+## Optional (For Accuracy/Durability)
+- [ ] **Radiation Shield** (for temp sensor)  
+- [ ] **Battery + Solar Panel** (remote power)  
+
+---
+
+### Simplified Setup
+- Use **1 camera** + **BME280 + Anemometer** for minimal version.  
+- Skip wind vane if direction isn’t critical.  
