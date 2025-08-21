@@ -1,0 +1,25 @@
+--> Docker deamon start <--
+
+sudo systemctl start docker
+
+sudo systemctl status docker
+
+sudo systemctl stop docker
+
+sudo systemctl restart docker
+
+
+
+--> Upload bulk files to min.io via api <--
+
+for file in test_data/*; do
+  echo "Uploading: $file"
+  curl -F "file=@$file" http://localhost:5000/buckets/test-bucket/upload
+  echo ""
+done
+
+
+--> Verify upload <--
+
+echo "=== Uploaded Files ==="
+curl http://localhost:5000/buckets/test-bucket/objects
