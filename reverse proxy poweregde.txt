@@ -1,0 +1,9 @@
+reverse-proxy poweregde r630, E5-2640 on reverseproxy atm ja 251gb ram <-- tämä dev kone
+
+photoprysm proliant DL-380 gen 9 tämä pysyy sfp+ vain
+
+dell r440 - Hidden Dev 91 ram 48 core 
+
+dell poweredge 620 pitäis olla reverse proxy 
+
+E5-2650 dell poweredge 620 tällä hetkellä dev kone 62gb ram 
