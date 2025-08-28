@@ -302,3 +302,29 @@ print("Connection to MinIO server:", health)
 **Logs Command**: `sudo docker-compose logs minio`  
 
 ---
+
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: warrant_shared_minio
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin123
+    command: server /data --console-address ":9001" --address ":9000"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  minio_data:
+
+
+sudo docker-compose config
+
+sudo docker-compose up -d
+
