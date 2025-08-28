@@ -305,23 +305,23 @@ print("Connection to MinIO server:", health)
 
 version: '3.8'
 
-services:
-  minio:
-    image: minio/minio:latest
-    container_name: warrant_shared_minio
-    restart: unless-stopped
-    ports:
-      - "9000:9000"
-      - "9001:9001"
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin123
-    command: server /data --console-address ":9001" --address ":9000"
-    volumes:
-      - minio_data:/data
+services:                    # 0 spaces ✅
+  minio:                     # 2 spaces ✅
+    image: minio/minio:latest        # 4 spaces
+    container_name: warrant_shared_minio  # 4 spaces
+    restart: unless-stopped  # 4 spaces
+    ports:                   # 4 spaces
+      - "9000:9000"         # 6 spaces ✅
+      - "9001:9001"         # 6 spaces
+    environment:             # 4 spaces
+      MINIO_ROOT_USER: minioadmin    # 6 spaces
+      MINIO_ROOT_PASSWORD: minioadmin123  # 6 spaces
+    command: server /data --console-address ":9001" --address ":9000"  # 4 spaces
+    volumes:                 # 4 spaces ✅
+      - minio_data:/data    # 6 spaces ✅
 
-volumes:
-  minio_data:
+volumes:                     # 0 spaces ✅
+  minio_data:               # 2 spaces ✅
 
 
 sudo docker-compose config
