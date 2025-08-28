@@ -1,131 +1,47 @@
-# MinIO Server Setup Guide
+# MinIO Server Setup - Docker Method Only
 
 ## Machine Details
 - **IP Address**: 192.168.1.100 (static)
 - **Purpose**: Centralized file storage for Warrant development team
-- **Access**: MinIO API (port 9000) + Web Console (port 9001)
+- **Method**: Docker Compose (Simple & Fast)
 
-## 1. Pre-Setup Verification
+## Step 1: Install Docker
 
-### Check Current Status
 ```bash
-# Check if MinIO is already running
-sudo systemctl status minio
-docker ps | grep minio
-sudo netstat -tulpn | grep 9000
+# Check if Docker is already installed
+docker --version
+docker-compose --version
 
-# Check static IP configuration
-ip addr show
-ping 8.8.8.8  # Test internet connectivity
-```
-
-### Check Network Access
-```bash
-# Test if ports are open to development network
-sudo ufw status
-sudo iptables -L
-```
-
-## 2. MinIO Installation (Choose One Method)
-
-### Method A: System Service Installation
-
-#### Download and Install MinIO
-```bash
-# Create MinIO user
-sudo useradd -r minio-user -s /sbin/nologin
-
-# Create directories
-sudo mkdir -p /opt/minio/data
-sudo mkdir -p /opt/minio/config
-sudo chown -R minio-user:minio-user /opt/minio
-
-# Download MinIO binary
-cd /tmp
-wget https://dl.min.io/server/minio/release/linux-amd64/minio
-sudo chmod +x minio
-sudo mv minio /usr/local/bin/
-
-# Verify installation
-/usr/local/bin/minio --version
-```
-
-#### Create Service Configuration
-```bash
-# Create service file
-sudo tee /etc/systemd/system/minio.service > /dev/null <<EOF
-[Unit]
-Description=MinIO Object Storage Server
-Documentation=https://docs.min.io
-Wants=network-online.target
-After=network-online.target
-AssertFileIsExecutable=/usr/local/bin/minio
-
-[Service]
-WorkingDirectory=/opt/minio
-User=minio-user
-Group=minio-user
-EnvironmentFile=-/etc/default/minio
-ExecStartPre=/bin/bash -c "if [ -z \"\${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"
-ExecStart=/usr/local/bin/minio server \$MINIO_OPTS \$MINIO_VOLUMES
-Restart=always
-LimitNOFILE=65536
-TasksMax=infinity
-TimeoutStopSec=infinity
-SendSIGKILL=no
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-# Create environment configuration
-sudo tee /etc/default/minio > /dev/null <<EOF
-# MinIO local volumes
-MINIO_VOLUMES="/opt/minio/data"
-
-# MinIO access credentials
-MINIO_ROOT_USER=minioadmin
-MINIO_ROOT_PASSWORD=minioadmin123
-
-# MinIO options
-MINIO_OPTS="--console-address :9001 --address :9000"
-
-# MinIO server URL
-MINIO_SERVER_URL="http://192.168.1.100:9000"
-EOF
-
-# Enable and start service
-sudo systemctl daemon-reload
-sudo systemctl enable minio
-sudo systemctl start minio
-```
-
-### Method B: Docker Installation
-
-#### Install Docker (if not installed)
-```bash
-# Update package index
+# If not installed, install Docker
 sudo apt update
-
-# Install Docker
 sudo apt install -y docker.io docker-compose
 
-# Start Docker service
+# Start and enable Docker service
 sudo systemctl enable docker
 sudo systemctl start docker
 
-# Add user to docker group (optional)
+# Test Docker installation
+sudo docker run hello-world
+
+# (Optional) Add current user to docker group to avoid sudo
 sudo usermod -aG docker $USER
+# Note: You'll need to log out and back in for this to take effect
 ```
 
-#### Create Docker Compose Setup
+## Step 2: Create MinIO Directory and Configuration
+
 ```bash
-# Create MinIO directory
+# Create directory for MinIO setup
 sudo mkdir -p /opt/minio-docker
 cd /opt/minio-docker
 
-# Create docker-compose.yml
-sudo tee docker-compose.yml > /dev/null <<EOF
+# Create docker-compose.yml file
+sudo nano docker-compose.yml
+```
+
+**Copy this EXACT content into the docker-compose.yml file:**
+
+```yaml
 version: '3.8'
 
 services:
@@ -151,74 +67,108 @@ services:
 volumes:
   minio_data:
     driver: local
-EOF
-
-# Start MinIO
-sudo docker-compose up -d
 ```
 
-## 3. Network Configuration
+**Save and exit:** `Ctrl+X`, then `Y`, then `Enter`
 
-### Configure Firewall
+## Step 3: Start MinIO Service
+
 ```bash
-# Allow MinIO ports from development network
+# Start MinIO in background
+sudo docker-compose up -d
+
+# Check if container is running
+sudo docker-compose ps
+
+# Check logs to verify startup
+sudo docker-compose logs minio
+
+# Check container health
+sudo docker ps
+```
+
+**Expected output from `docker-compose ps`:**
+```
+Name                    State    Ports
+warrant_shared_minio   Up       0.0.0.0:9000->9000/tcp, 0.0.0.0:9001->9001/tcp
+```
+
+## Step 4: Configure Firewall
+
+```bash
+# Install UFW if not installed
+sudo apt install ufw
+
+# Allow MinIO ports from development network (adjust IP range if needed)
 sudo ufw allow from 192.168.1.0/24 to any port 9000
 sudo ufw allow from 192.168.1.0/24 to any port 9001
 
-# Or allow from specific developer IPs (replace with actual IPs)
-# sudo ufw allow from 192.168.1.50 to any port 9000
-# sudo ufw allow from 192.168.1.51 to any port 9000
-
-# Enable firewall if not enabled
+# Enable firewall
 sudo ufw --force enable
 
 # Check firewall status
 sudo ufw status numbered
 ```
 
-### Verify Network Binding
-```bash
-# Check MinIO is listening on all interfaces (0.0.0.0)
-sudo netstat -tulpn | grep 9000
-sudo netstat -tulpn | grep 9001
-
-# Should show: 0.0.0.0:9000 and 0.0.0.0:9001
+**Expected output should show:**
+```
+[ 1] 9000                       ALLOW IN    192.168.1.0/24
+[ 2] 9001                       ALLOW IN    192.168.1.0/24
 ```
 
-## 4. Service Verification
-
-### Check Service Status
-```bash
-# For system service
-sudo systemctl status minio
-sudo journalctl -u minio -f
-
-# For Docker
-sudo docker-compose ps
-sudo docker-compose logs minio
-```
+## Step 5: Verify Everything Works
 
 ### Test Local Access
 ```bash
-# Test API endpoint
-curl http://localhost:9000/minio/health/live
-curl http://127.0.0.1:9000/minio/health/live
+# Install curl if not available
+sudo apt install curl
 
-# Test external access (replace with actual static IP)
-curl http://192.168.1.100:9000/minio/health/live
+# Test MinIO API health endpoint
+curl http://localhost:9000/minio/health/live
+
+# Should return: HTTP 200 OK (no output is normal)
 ```
 
-### Access Web Console
+### Test Network Binding
 ```bash
-# Open web console (use actual IP)
-# URL: http://192.168.1.100:9001
+# Check what's listening on MinIO ports
+sudo netstat -tulpn | grep 9000
+sudo netstat -tulpn | grep 9001
+
+# Should show: 0.0.0.0:9000 and 0.0.0.0:9001 (not 127.0.0.1)
+```
+
+### Test External Access
+```bash
+# Test external API access (replace with actual IP)
+curl http://192.168.1.100:9000/minio/health/live
+
+# Should return: HTTP 200 OK
+```
+
+## Step 6: Access MinIO Web Console
+
+### From the MinIO Server Machine
+```bash
+# Open web browser and go to:
+# http://192.168.1.100:9001
+# 
+# Login credentials:
 # Username: minioadmin
 # Password: minioadmin123
 ```
 
-## 5. Test from Development Machines
+### Create Initial Bucket
+1. **Login to web console** at http://192.168.1.100:9001
+2. **Click "Create Bucket"**
+3. **Bucket name**: `warrant-storage`
+4. **Click "Create Bucket"**
+5. **Verify bucket appears in list**
 
-### From Developer Machines (test these commands)
+## Step 7: Test from Development Machines
+
+**From each developer machine, test these commands:**
+
 ```bash
 # Test network connectivity
 ping 192.168.1.100
@@ -226,182 +176,129 @@ ping 192.168.1.100
 # Test MinIO API access
 curl http://192.168.1.100:9000/minio/health/live
 
-# Test console access (in browser)
+# Test web console access (open in browser)
 # http://192.168.1.100:9001
 ```
 
-## 6. Create Initial Bucket
+## Step 8: Management Commands
 
-### Via Web Console
-1. Open http://192.168.1.100:9001
-2. Login with minioadmin/minioadmin123
-3. Create bucket named: `warrant-storage`
-4. Set access policy to "public" if needed
-
-### Via Command Line (MinIO Client)
+### Check Status
 ```bash
-# Install MinIO client
-wget https://dl.min.io/client/mc/release/linux-amd64/mc
-chmod +x mc
-sudo mv mc /usr/local/bin/
+# Check if MinIO is running
+sudo docker-compose ps
 
-# Configure client
-mc alias set local http://localhost:9000 minioadmin minioadmin123
-
-# Create bucket
-mc mb local/warrant-storage
-
-# List buckets
-mc ls local/
-```
-
-## 7. Monitoring and Logs
-
-### Check Logs
-```bash
-# System service logs
-sudo journalctl -u minio -f
-
-# Docker logs
-sudo docker-compose logs -f minio
-
-# Check disk usage
-df -h /opt/minio/data
-```
-
-### Performance Monitoring
-```bash
-# Check system resources
-htop
-iotop
-free -h
-```
-
-## 8. Troubleshooting
-
-### Common Issues
-
-#### MinIO not accessible externally
-```bash
-# Check binding address
-sudo netstat -tulpn | grep 9000
-# Should show 0.0.0.0:9000, not 127.0.0.1:9000
-
-# Check firewall
-sudo ufw status
-ping 192.168.1.100  # from dev machine
-```
-
-#### Service won't start
-```bash
 # Check logs
-sudo journalctl -u minio -n 50
+sudo docker-compose logs minio
 
-# Check permissions
-sudo ls -la /opt/minio/
-sudo chown -R minio-user:minio-user /opt/minio/
+# Check container resource usage
+sudo docker stats warrant_shared_minio
+```
+
+### Restart MinIO
+```bash
+cd /opt/minio-docker
+sudo docker-compose restart minio
+```
+
+### Stop MinIO
+```bash
+cd /opt/minio-docker
+sudo docker-compose down
+```
+
+### Start MinIO
+```bash
+cd /opt/minio-docker
+sudo docker-compose up -d
+```
+
+### Update MinIO
+```bash
+cd /opt/minio-docker
+sudo docker-compose pull minio
+sudo docker-compose up -d
+```
+
+## Step 9: Troubleshooting
+
+### MinIO Container Won't Start
+```bash
+# Check logs for errors
+sudo docker-compose logs minio
 
 # Check disk space
 df -h
+
+# Check if ports are already in use
+sudo netstat -tulpn | grep 9000
 ```
 
-#### Connection refused from dev machines
+### Can't Access from Development Machines
 ```bash
-# On MinIO server, check what's listening
-sudo ss -tulpn | grep 9000
+# Check firewall on MinIO server
+sudo ufw status
 
-# Test local connection first
+# Check MinIO is listening on all interfaces
+sudo netstat -tulpn | grep 9000
+# Should show: 0.0.0.0:9000, not 127.0.0.1:9000
+
+# Test local access first
 curl http://localhost:9000/minio/health/live
-
-# Check network route
-traceroute 192.168.1.100  # from dev machine
 ```
 
-## 9. Security Considerations
-
-### Production Recommendations
+### Forgot Web Console Password
 ```bash
-# Change default credentials (for production)
-# Edit /etc/default/minio or docker-compose.yml
-MINIO_ROOT_USER=your-secure-username
-MINIO_ROOT_PASSWORD=your-secure-password-min-8-chars
+# Stop MinIO
+sudo docker-compose down
 
-# Set up proper SSL/TLS (for production)
-# Configure reverse proxy (nginx/apache)
-# Use proper domain name
+# Edit docker-compose.yml and change:
+# MINIO_ROOT_PASSWORD: your-new-password
+
+# Start MinIO
+sudo docker-compose up -d
 ```
 
-### Backup Strategy
+## Step 10: Success Verification
+
+### ✅ Setup Complete When:
+- [ ] `sudo docker-compose ps` shows MinIO as "Up"
+- [ ] `curl http://localhost:9000/minio/health/live` returns HTTP 200
+- [ ] `curl http://192.168.1.100:9000/minio/health/live` returns HTTP 200 (from dev machine)
+- [ ] Web console accessible at http://192.168.1.100:9001
+- [ ] `warrant-storage` bucket exists in web console
+- [ ] Firewall allows ports 9000/9001 from development network
+
+### Final Test from Development Machine
+Once setup is complete, test from your development machine:
+
 ```bash
-# Set up regular backups
-sudo crontab -e
-
-# Add backup job (example)
-# 0 2 * * * rsync -av /opt/minio/data/ /backup/minio/$(date +\%Y\%m\%d)/
-```
-
-## 10. Expected Results
-
-### Successful Setup Indicators
-- ✅ `sudo systemctl status minio` shows "active (running)"
-- ✅ `curl http://192.168.1.100:9000/minio/health/live` returns HTTP 200
-- ✅ Web console accessible at http://192.168.1.100:9001
-- ✅ `warrant-storage` bucket exists
-- ✅ Development machines can reach MinIO server
-- ✅ Firewall allows ports 9000/9001 from dev network
-
-### Integration Test
-After setup, developers should test:
-```bash
-# From development machine
+# Start your Django services
 docker-compose up -d
-python manage.py init_minio_storage
-python manage.py shell
+
+# Test Django connection to MinIO
+docker-compose exec backend python manage.py shell
 ```
 
+In Django shell:
 ```python
 from apps.media.services.storage_service import StorageService
 storage = StorageService()
 health = storage.health_check()
-print("External MinIO Health:", health)
-```
-
-## 11. Maintenance
-
-### Regular Tasks
-```bash
-# Check service status weekly
-sudo systemctl status minio
-
-# Monitor disk usage
-df -h /opt/minio/data
-
-# Check logs for errors
-sudo journalctl -u minio --since "1 week ago" | grep -i error
-
-# Update MinIO (when needed)
-# Download new binary and restart service
-```
-
-### Restart Commands
-```bash
-# System service
-sudo systemctl restart minio
-
-# Docker
-sudo docker-compose restart minio
+print("Connection to MinIO server:", health)
+# Should show: {'status': 'healthy', 'minio_connection': 'ok'}
 ```
 
 ---
 
-## Quick Reference
+## Quick Reference Card
 
-**Server IP**: 192.168.1.100
-**API Port**: 9000
-**Console Port**: 9001
-**Credentials**: minioadmin / minioadmin123
-**Bucket**: warrant-storage
-**Health Check**: `curl http://192.168.1.100:9000/minio/health/live`
-**Web Console**: http://192.168.1.100:9001
+**Server**: 192.168.1.100  
+**API**: http://192.168.1.100:9000  
+**Console**: http://192.168.1.100:9001  
+**Login**: minioadmin / minioadmin123  
+**Bucket**: warrant-storage  
+**Config Location**: /opt/minio-docker/  
+**Restart Command**: `cd /opt/minio-docker && sudo docker-compose restart minio`  
+**Logs Command**: `sudo docker-compose logs minio`  
 
 ---
