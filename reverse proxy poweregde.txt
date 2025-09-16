@@ -7,3 +7,5 @@ dell r440 - Hidden Dev 91 ram 48 core
 dell poweredge 620 pitäis olla reverse proxy 
 
 E5-2650 dell poweredge 620 tällä hetkellä dev kone 62gb ram 
+
+Uus dell 740 - Ram 192gb ddr4 2400mhz 5x 3.6 TB 2x intel xeonR silver 4114 2.20ghz
