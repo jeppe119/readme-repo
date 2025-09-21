@@ -1,0 +1,247 @@
+# [_] Gaming Workstation Setup Plan
+
+## [=] Component Inventory
+
+### Core Components
+| Component | Model | Price | Status | Notes |
+|-----------|-------|--------|--------|-------|
+| **Motherboard** | ASUS TUF Gaming B650-PLUS | €166.90 | [ ] To Order | ATX, AM5 Socket |
+| **CPU** | AMD Ryzen 7 7800X3D | €389.90 | [ ] To Order | 8-core, AM5, Gaming optimized |
+| **RAM** | Kingston 32GB Fury Beast DDR5-6000 | €139.90 | [ ] To Order | 2x16GB, CL36, 1.35V |
+| **GPU** | ASUS GeForce RTX 5060 Ti Dual OC | €474.90 | [ ] To Order | 16GB GDDR7 |
+| **Storage 1** | WD Black SN7100 2TB NVMe | €140.90 | [ ] To Order | Windows 11, PCIe 4.0 |
+| **Storage 2** | WD Black SN7100 1TB NVMe | €79.90 | [ ] To Order | Arch Linux, PCIe 4.0 |
+| **PSU** | ASUS 850W TUF Gaming Gold | €133.90 | [ ] To Order | 80+ Gold, Modular |
+| **Cooling** | Arctic Liquid Freezer III Pro 360 | €93.90 | [ ] To Order | 360mm AIO, Black |
+| **Monitor** | ASUS 34" TUF Gaming VG34VQL3A | €399.00 | [ ] To Order | 180Hz WQHD Curved |
+| **Case** | Lian Li LANCOOL 207 Digital | €119.90 | [ ] To Order | ATX Mid-Tower, Glass Panel |
+
+### Peripherals & Accessories
+| Item | Model | Price | Status | Purpose |
+|------|-------|--------|--------|---------|
+| **Microphone** | Audio-Technica AT2020 | €91.99 | [ ] To Order | Condenser Mic |
+| **Headphones** | Beyerdynamic DT 990 Pro 250Ω | €159.00 | [ ] To Order | Open-back Studio |
+| **Mic Arm** | Streamplify Microphone Arm | €39.90 | [ ] To Order | Desk clamp, White/Black |
+| **Audio Interface** | Behringer U-Phoria UMC22 | €65.00 | [ ] To Order | USB Audio Interface |
+| **Wall Mount** | Multibrackets Flexarm III 360 | €108.99 | [ ] To Order | TV/Monitor wall mount |
+| **Ultrawide Arm** | Mozi Infinity Line | €99.99 | [ ] To Order | Main monitor arm |
+| **Side Monitor Stand** | Mozi Basic Stand with Joint | €34.99 | [ ] To Order | Secondary display |
+| **Audio Cable** | Goobay XLR-XLR 2m | €11.99 | [ ] To Order | Mic to interface |
+| **Chair** | JYSK VARPELEV | €215.00 | [ ] To Order | Ergonomic mesh office |
+
+### Existing Equipment
+| Item | Status | Notes |
+|------|--------|-------|
+| **Desk/Table** | [x] Available | Ready for setup |
+| **Secondary Monitors** | [x] Available | 2x monitors for multi-display |
+
+## >>> Setup Goals
+
+### Primary Use Cases
+- **Gaming**: High-performance 1440p ultrawide gaming (main: 34" curved)
+- **Content Creation**: Audio recording, streaming, video editing
+- **Development**: Dual-boot Windows 11 + Arch Linux
+- **Productivity**: Triple monitor workflow (ultrawide main + 1 side + 1 stacked above)
+
+### Performance Targets
+- **Gaming**: 120+ FPS @ 3440x1440 on high settings
+- **Workstation**: Silent operation under load
+- **Storage**: Fast boot times (<15s) for both OS
+
+## /!\ Assembly Plan
+
+### Phase 1: Core Build (Day 1)
+#### Pre-Assembly Checklist
+- [ ] Clear workspace (minimum 1m x 1m)
+- [ ] Anti-static preparations
+- [ ] Tools ready: Phillips screwdriver, cable ties
+- [ ] Motherboard manual downloaded
+- [ ] BIOS update USB prepared
+
+#### Assembly Order
+1. **Case Preparation**
+   - [ ] Remove side panels from Lian Li LANCOOL 207
+   - [ ] Install I/O shield
+   - [ ] Pre-install standoffs (check case manual)
+   - [ ] Route 24-pin and CPU power cables
+   - [ ] Plan RGB/Digital display connections
+
+2. **Motherboard Assembly (Outside Case)**
+   - [ ] Install CPU (check AM5 orientation!)
+   - [ ] Install RAM in slots 2 & 4 (A2/B2) - DDR5-6000
+   - [ ] Install both M.2 SSDs with heatsinks
+   - [ ] Pre-mount Arctic AIO pump block
+
+3. **Case Installation**
+   - [ ] Mount motherboard to LANCOOL 207
+   - [ ] Install PSU (fan down if case has bottom filter)
+   - [ ] Mount Arctic 360mm radiator (top exhaust recommended)
+   - [ ] Install RTX 5060 Ti (check clearance)
+   - [ ] Connect all power cables
+
+4. **Initial Testing**
+   - [ ] Power on test
+   - [ ] POST check
+   - [ ] Temperature monitoring
+
+### Phase 2: Cooling & Cable Management (Day 1-2)
+#### AIO Installation Details
+- **Radiator Position**: Top-mounted, exhaust configuration
+- **Pump Position**: CPU block orientation for best performance  
+- **Fan Configuration**: Push/pull for maximum cooling
+- **Cable Routing**: Clean path to CPU_FAN header
+
+#### Cable Management
+- [ ] 24-pin motherboard power
+- [ ] 8-pin CPU power
+- [ ] GPU power cables
+- [ ] SATA power for any accessories
+- [ ] Front panel connectors
+- [ ] USB headers
+- [ ] Audio headers
+
+### Phase 3: Storage & OS Installation (Day 2)
+#### Dual Boot Configuration
+1. **Windows 11 Installation** (2TB Drive)
+   - [ ] Create Windows installation media
+   - [ ] Install on M.2 Slot 1
+   - [ ] Windows updates
+   - [ ] Driver installation
+   - [ ] Gaming software setup
+
+2. **Arch Linux Installation** (1TB Drive)
+   - [ ] Arch installation media
+   - [ ] Install on M.2 Slot 2
+   - [ ] GRUB bootloader configuration
+   - [ ] Development environment setup
+
+## [>] Workspace Setup Plan
+
+### Phase 4: Peripherals & Multi-Monitor Setup (Day 2-3)
+#### Monitor Configuration
+- [ ] **Primary Display**: Mount 34" ultrawide on Mozi Infinity Line arm
+- [ ] **Secondary Display**: Position 1 existing monitor to the side using Basic Stand
+- [ ] **Tertiary Display**: Stack 1 existing monitor above ultrawide (wall mount or stacked arm)
+- [ ] **Cable Management**: Route all display cables behind desk
+- [ ] **Display Settings**: 
+  - Main: 3440x1440 @ 180Hz (gaming/primary work)
+  - Side: Extended display for chat/monitoring
+  - Top: Code/documentation/streaming tools
+- [ ] **Gaming Profile**: HDR, adaptive sync setup for main display
+
+#### Audio Production Setup
+- [ ] Mount AT2020 microphone on Streamplify boom arm
+- [ ] Connect XLR cable from mic to UMC22 interface
+- [ ] USB connection from UMC22 to PC
+- [ ] Position DT 990 Pro headphones for easy access
+- [ ] **Software Configuration**:
+  - Audio routing in Windows/Linux
+  - Noise gate and EQ setup
+  - Recording software (Reaper/Audacity)
+  - Streaming software (OBS) audio setup
+
+#### Workspace Ergonomics
+- [ ] VARPELEV chair adjustment (height, lumbar, armrests)
+- [ ] Monitor positioning (ultrawide centered, sides angled)
+- [ ] Keyboard/mouse positioning relative to main display
+- [ ] Microphone arm positioning (comfortable speaking distance)
+- [ ] Lighting setup to reduce eye strain
+
+## <=> Power & Thermal Management
+
+### Power Distribution
+- **Total System Power**: ~600W under full load
+- **PSU Headroom**: 850W provides excellent efficiency curve
+- **UPS Recommendation**: Consider 1000VA UPS for protection
+
+### Cooling Strategy
+- **Case Airflow**: Positive pressure setup
+- **CPU**: 360mm AIO top exhaust
+- **GPU**: Custom fan curves for quiet operation
+- **Monitoring**: HWiNFO64, Core Temp
+
+## ??? Testing & Validation
+
+### Day 3: System Validation
+#### Stability Testing
+- [ ] CPU stress test (Prime95, 2+ hours)
+- [ ] GPU stress test (FurMark, 1+ hour)  
+- [ ] Memory test (MemTest86, overnight)
+- [ ] Storage benchmark (CrystalDiskMark)
+- [ ] Gaming stability test
+
+#### Performance Benchmarks
+- [ ] Cinebench R23 (CPU)
+- [ ] 3DMark Time Spy (GPU)
+- [ ] Game-specific benchmarks
+- [ ] Boot time measurements
+
+## {;} Software Configuration
+
+### Windows 11 Setup
+- [ ] NVIDIA/AMD drivers
+- [ ] Motherboard chipset drivers
+- [ ] Steam, Epic Games, etc.
+- [ ] OBS Studio (streaming)
+- [ ] Audio software (Reaper/Audacity)
+
+### Arch Linux Setup
+- [ ] Desktop environment (GNOME/KDE)
+- [ ] Development tools
+- [ ] Wine/Proton for gaming
+- [ ] Audio production software
+
+### Configuration  
+- Update BIOS before OS installation
+- Enable XMP/DOCP for RAM
+- Set fan curves for noise optimization
+- Regular thermal paste maintenance (yearly)
+
+## /!\ Troubleshooting Quick Reference
+
+| Issue | Check | Solution |
+|-------|--------|----------|
+| No POST | RAM seating, power connections | Reseat components |
+| High temps | Fan operation, thermal paste | Check cooling |
+| Boot issues | Boot priority, drive health | BIOS settings |
+| Audio issues | Driver installation, connections | Update/reinstall |
+
+---
+
+**Total Estimated Cost**: ~€2,139 (excluding existing desk & monitors)
+
+---
+
+### >>> Final Setup Vision
+- **Gaming Station**: 34" ultrawide for immersive gaming + RTX 5060 Ti performance
+- **Content Creation Hub**: Professional audio setup with AT2020 + UMC22
+- **Development Workstation**: Triple monitor productivity (main + side + stacked) with dual-boot capability
+- **Ergonomic Workspace**: Quality chair and optimized monitor positioning
+
+---
+
+## [#] Component Links
+
+### Core Components
+- **Motherboard**: https://www.jimms.fi/fi/Product/Show/185532/tuf-gaming-b650-plus/asus-tuf-gaming-b650-plus-atx-emolevy/
+- **CPU**: https://www.jimms.fi/fi/Product/Show/188803/100-100000910wof/amd-ryzen-7-7800x3d-am5-4-2-ghz-8-core-wof/
+- **RAM**: https://www.jimms.fi/fi/Product/Show/206660/kf560c36bbe2k2-32/kingston-32gb-2-x-16gb-fury-beast-ddr5-6000mhz-cl36-1-35v-musta/
+- **GPU**: https://www.jimms.fi/fi/Product/Show/210470/dual-rtx5060ti-o16g/asus-geforce-rtx-5060-ti-dual-oc-edition-naytonohjain-16gb-gddr7
+- **Storage 1**: https://www.jimms.fi/fi/Product/Show/208164/wds200t4x0e-00cja0/western-digital-2tb-wd_black-sn7100-nvme-ssd-levy-m-2-2280-pcie-4-0-x4-7250-6900-mb-s
+- **Storage 2**: https://www.jimms.fi/fi/Product/Show/208163/wds100t4x0e-00cja0/western-digital-1tb-wd_black-sn7100-nvme-ssd-levy-m-2-2280-pcie-4-0-x4-7250-6900-mb-s
+- **PSU**: https://www.jimms.fi/fi/Product/Show/191518/90ye00s2-b0na00/asus-850w-tuf-gaming-gold-atx-virtalahde-80-plus-gold-musta
+- **Cooling**: https://www.jimms.fi/fi/Product/Show/210634/acfre00180a/arctic-liquid-freezer-iii-pro-360-360mm-aio-nestejaahdytysratkaisu-prosessorille-musta
+- **Monitor**: https://www.jimms.fi/fi/Product/Show/200528/tuf-gaming-vg34vql3a/asus-34-tuf-gaming-vg34vql3a-kaareva-180hz-wqhd-pelimonitori-musta
+- **Case**: https://www.jimms.fi/fi/Product/Show/210436/lan207dx/lian-li-lancool-207-digital-ikkunallinen-miditornikotelo-musta
+
+### Peripherals & Accessories
+- **Microphone**: https://www.verkkokauppa.com/fi/product/160429/Audio-Technica-AT2020-Kardioidi-kondensaattorimikrofoni
+- **Headphones**: https://www.verkkokauppa.com/fi/product/172769/Beyerdynamic-DT-990-Pro-250-Ohm-avoimet-stereokuulokkeet
+- **Mic Arm**: https://www.jimms.fi/fi/Product/Show/190994/spom-ma1mcl1-21/streamplify-mount-arm-mikronijalusta-valkoinen-musta
+- **Audio Interface**: https://www.verkkokauppa.com/fi/product/541664/Behringer-U-Phoria-UMC22-aanikortti-USB-vaylaan
+- **Wall Mount**: https://www.verkkokauppa.com/fi/product/505953/Multibrackets-Flexarm-III-360-television-tai-nayton-varrelli
+- **Ultrawide Arm**: https://www.verkkokauppa.com/fi/product/925756/Mozi-Infinity-Line-monitorivarsi-musta
+- **Side Monitor Stand**: https://www.verkkokauppa.com/fi/product/536076/Mozi-Basic-Stand-with-Joint-poytajalka-yhdelle-naytolle
+- **Audio Cable**: https://www.verkkokauppa.com/fi/product/530493/Goobay-XLR-XLR-kaapeli-2-m
+- **Chair**: https://jysk.fi/tyohuone/tyotuolit/tyotuoli-varpelev-musta-verkkokangas
+
