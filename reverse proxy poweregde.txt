@@ -1,13 +1,15 @@
-reverse-proxy poweregde r630, E5-2640 on reverseproxy atm ja 251gb ram <-- tämä dev kone - ett boss kort hit - inga kort
+reverse-proxy poweregde r630, E5-2640 on reverseproxy atm ja 251gb ram <-- tämä dev kone - ett boss kort hit - inga kort <Pilot>
+
+RAG - Rtos, (Brutus)
 
 photoprysm proliant DL-380 gen 9 tämä pysyy sfp+ vain
 
 dell r440 - Hidden Dev 91 ram 48 core - minio - 1 boss kort hit
 
-dell poweredge 620 pitäis olla reverse proxy 
+dell poweredge 620 pitäis olla reverse proxy <Pilot>
 
 E5-2650 dell poweredge 620 tällä hetkellä dev kone 62gb ram 
 
-Uus dell 740 - Ram 192gb ddr4 2400mhz 5x 3.6 TB 2x intel xeonR silver 4114 2.20ghz - boss 2x m.2 ssd - 2x nvme riser - 
+Uus dell 740 - Ram 192gb ddr4 2400mhz 5x 3.6 TB 2x intel xeonR silver 4114 2.20ghz - boss 2x m.2 ssd - 2x nvme riser - <Atlas>
 
 2 boss kort till  
