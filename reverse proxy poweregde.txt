@@ -1,4 +1,4 @@
-reverse-proxy poweregde r630, E5-2640 on reverseproxy atm ja 251gb ram <-- tämä dev kone - ett boss kort hit - inga kort <Pilot>
+reverse-proxy poweregde r630, E5-2640 on reverseproxy atm ja 251gb ram <-- tämä dev kone - ett boss kort hit - inga kort <Cargo>
 
 RAG - Rtos, (Brutus)
 
